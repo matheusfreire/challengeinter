@@ -1,0 +1,1 @@
+This project was made with [maven](https://maven.apache.org/) archetype and use [junit](https://junit.org/junit5/) for tests
