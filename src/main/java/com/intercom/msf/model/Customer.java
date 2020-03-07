@@ -1,5 +1,7 @@
 package com.intercom.msf.model;
 
+import com.google.gson.annotations.Expose;
+
 import java.util.Objects;
 
 /**
@@ -7,8 +9,10 @@ import java.util.Objects;
  */
 public class Customer implements Comparable<Customer>{
 
+    @Expose
     private int id;
 
+    @Expose
     private String name;
 
     private Coordinates coordinates;
@@ -52,6 +56,6 @@ public class Customer implements Comparable<Customer>{
 
     @Override
     public int hashCode() {
-        return 0;
+        return id;
     }
 }

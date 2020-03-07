@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.intercom.msf.deserializer.CustomerDeserializer;
 import com.intercom.msf.model.Customer;
 
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -19,18 +19,38 @@ import java.util.stream.Stream;
  */
 public class CustomerRepository {
 
-    public static List<Customer> getCustomersFromFile(String filePath) {
-        try{
+    private static final String LINE_SEPARATOR = System.getProperty("line.separator");
+
+    public static List<Customer> getCustomersFromFile(String filePath) throws NullPointerException, IOException {
+        if(filePath != null && !filePath.isEmpty()){
             Gson gson = new GsonBuilder().registerTypeAdapter(Customer.class, new CustomerDeserializer()).create();
             Path path = Paths.get(filePath);
             Stream<String> lines = Files.lines(path);
             return lines.map(line -> gson.fromJson(line, Customer.class)).collect(Collectors.toList());
-        } catch (IOException ne) {
-            ne.printStackTrace();
+        } else {
+            throw new NullPointerException("Filepath couldn't be null ");
         }
-        return null;
     }
 
-    public static void saveCustomersInvited(Set<Customer> sortedCustomerWithin) {
+    public static void saveCustomersInvited(Set<Customer> sortedCustomerWithin, String filePath) throws NullPointerException, IOException {
+        if(filePath != null && !filePath.isEmpty() || sortedCustomerWithin != null && !sortedCustomerWithin.isEmpty()){
+            Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+            Stream<String> stringStream = sortedCustomerWithin.stream().map(gson::toJson);
+            writeFile(filePath,stringStream);
+        } else {
+            throw new NullPointerException("Filepath or customers couldn't be null ");
+        }
+    }
+
+    private static void writeFile(String filePath,Stream<String> stringStream) throws IOException {
+        FileWriter fileWriter = new FileWriter(filePath);
+        stringStream.forEach(customerS -> {
+            try {
+                fileWriter.write(customerS + LINE_SEPARATOR);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        fileWriter.close();
     }
 }

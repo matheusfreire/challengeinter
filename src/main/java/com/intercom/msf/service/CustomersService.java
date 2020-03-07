@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 /**
  * Created by matheus on 3/5/20.
  */
-public final class InviteService {
+public final class CustomersService {
     private static final double HUNDRED_EIGHTY_DEGREE = 180.0;
     private static final double LAT_OFFICE_DUBLIN = 53.339428;
     private static final double LONG_OFFICE_DUBLIN = -6.257664;

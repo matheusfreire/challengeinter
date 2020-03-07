@@ -9,7 +9,7 @@ import java.lang.reflect.Type;
 public class CustomerDeserializer implements JsonDeserializer<Customer> {
 
     @Override
-    public Customer deserialize(JsonElement jElement, Type typeOfT, JsonDeserializationContext context)throws JsonParseException {
+    public Customer deserialize(JsonElement jElement, Type typeOfT, JsonDeserializationContext context) throws JsonParseException, NumberFormatException {
         JsonObject jsonObject = jElement.getAsJsonObject();
         int id = jsonObject.get("user_id").getAsInt();
         String name = jsonObject.get("name").getAsString();
