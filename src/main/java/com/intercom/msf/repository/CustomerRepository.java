@@ -32,13 +32,16 @@ public class CustomerRepository {
         }
     }
 
-    public static void saveCustomersInvited(Set<Customer> sortedCustomerWithin, String filePath) throws NullPointerException, IOException {
-        if(filePath != null && !filePath.isEmpty() || sortedCustomerWithin != null && !sortedCustomerWithin.isEmpty()){
+    public static void saveCustomersInvited(Set<Customer> sortedCustomerWithin, String filePath) throws NullPointerException, IOException, Exception {
+        if(filePath != null && !filePath.isEmpty()){
+            if(sortedCustomerWithin == null || sortedCustomerWithin.isEmpty()){
+                throw new Exception("Customers should be filled");
+            }
             Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
             Stream<String> stringStream = sortedCustomerWithin.stream().map(gson::toJson);
             writeFile(filePath,stringStream);
         } else {
-            throw new NullPointerException("Filepath or customers couldn't be null ");
+            throw new NullPointerException("Filepath  couldn't be null ");
         }
     }
 

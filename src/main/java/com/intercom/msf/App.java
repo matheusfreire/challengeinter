@@ -19,7 +19,7 @@ public class App {
             CustomerRepository.saveCustomersInvited(sortedCustomerWithin, filePathOutput);
         } catch (NullPointerException ne) {
             System.out.println("File path should not be null or empty");
-        } catch (IOException e) {
+        } catch (Exception e) {
             System.out.println("There's a problem with you file");
         }
 

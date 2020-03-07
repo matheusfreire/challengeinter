@@ -1,2 +1,0 @@
-{"id":4,"name":"Ian Kehoe"}
-{"id":5,"name":"Nora Dempsey"}

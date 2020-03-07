@@ -11,10 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -73,7 +70,7 @@ class CustomerRepositoryTest {
     }
 
     @Test
-    void shouldValidateFileWasSaved() throws IOException {
+    void shouldValidateFileWasSaved() throws Exception {
         Coordinates co2 = new Coordinates(53.1302756, -6.2397222);
         Customer c2 = new Customer(5, "Nora Dempsey", co2);
 
@@ -88,9 +85,13 @@ class CustomerRepositoryTest {
     }
 
     @Test
-    void shouldValidateFileWasNotSaved() throws IOException {
-        CustomerRepository.saveCustomersInvited(new TreeSet<>(),String.format(PATH_FILE_OUTPUT, "output.txt"));
-        Path path = Paths.get(String.format(PATH_FILE_OUTPUT, "output.txt"));
+    void shouldValidateFileWasNotSaved() throws Exception {
+        Coordinates co4 = new Coordinates(53.2451022, -6.238335);
+        Customer c4 = new Customer(4, "Ian Kehoe", co4);
+
+        Set<Customer> setOfCustomer = new TreeSet<>(Collections.singletonList(c4));
+        CustomerRepository.saveCustomersInvited(setOfCustomer,String.format(PATH_FILE_OUTPUT, " "));
+        Path path = Paths.get(" ");
         assertFalse(Files.exists(path));
     }
 
