@@ -50,7 +50,7 @@ class CustomerRepositoryTest {
 
     @Test
     @DisplayName("Throw Exception When File Doesn't exists")
-    void shouldThrowExceptionWhenFileDoesntExists() {
+    void shouldThrowExceptionWhenFileNotExists() {
         assertThrows(NoSuchFileException.class, () -> CustomerRepository.getCustomersFromFile(String.format(PATH_FILE_INPUT, "file_not_exists.txt")));
     }
 
@@ -65,8 +65,15 @@ class CustomerRepositoryTest {
     }
 
     @Test
-    void saveCustomersInvited() {
-        assertDoesNotThrow(() -> CustomerRepository.saveCustomersInvited(null, null));
+    void shouldSaveCustomersNotThrowException() {
+        Coordinates co2 = new Coordinates(53.1302756, -6.2397222);
+        Customer c2 = new Customer(5, "Nora Dempsey", co2);
+
+        Coordinates co4 = new Coordinates(53.2451022, -6.238335);
+        Customer c4 = new Customer(4, "Ian Kehoe", co4);
+
+        Set<Customer> setOfCustomer = new TreeSet<>(Arrays.asList(c4,c2));
+        assertDoesNotThrow(() -> CustomerRepository.saveCustomersInvited(setOfCustomer,String.format(PATH_FILE_OUTPUT, "output.txt")));
     }
 
     @Test
